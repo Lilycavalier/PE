@@ -3,52 +3,66 @@ from PIL import ImageFilter
 from urllib.request import urlopen
 
 def change_type(oldImage):
-    change = input("Do you want to change the file type?").upper()
-    # Save the image in a different format
-    if change == "YES":
-        newName = input("type in the new name of the image and the new type(format: filename.type)")
-    # only works if file type in name is spelled correct!!
-    elif change == "NO":
-        newName = input("Please type in the name you want the image to be saved as")
+    try:
+        change = input("Do you want to change the file type?").upper()
+        # Save the image in a different format
+        if change == "YES":
+            newName = input("type in the new name of the image and the new type(format: filename.type)")
+        # only works if file type in name is spelled correct!!
+        elif change == "NO":
+            newName = input("Please type in the name you want the image to be saved as")
+    except:
+        print("error")
     oldImage.save(newName)
 
 def rotate(oldImage):
-    deg = int(input("How many degrees do you want to rotate (counter-clockwise)?"))
+    try:
+        deg = int(input("How many degrees do you want to rotate (counter-clockwise)?"))
+    except:
+        print("error. please type in an integer")
     rotated = oldImage.rotate(deg)
     rotated.show()
     return rotated
 
 def resize(oldImage):
-    width = input("What width should your image have?")
-    heigth = input("What heigth should your image have?")
+    try:
+        width = input("What width should your image have?")
+        heigth = input("What heigth should your image have?")
+    except:
+        print("error")
     resized = oldImage.resize((width, heigth))
     resized.show()
     return resized
 
 def change_color(oldImage):
-    x1 = int(input("Type in the value of the red band for the color you want to change"))
-    y1 = int(input("Type in the value of the green band for the color you want to change"))
-    z1 = int(input("Type in the value of the blue band for the color you want to change"))
-    x2 = int(input("Type in the value of the red band for the color you want to change it to"))
-    y2 = int(input(Type in the value of the green band for the color you want to change it to))
-    z2 = int(input(Type in the value of the blue band for the color you want to change it to))
-    pixels = oldImage.load() # create the pixel map
-    for i in range(oldImage.size[0]): # for every pixel:
-        for j in range(oldImage.size[1]):
-            if pixels[i,j] != (x1, y1, z1):
-                # change to black if not red
-                pixels[i,j] = (x2, y2 ,z2)
-    changed = oldImage
-    changed.show()
-    return changed
+    try:
+        x1 = int(input("Type in the value of the red band for the color you want to change"))
+        y1 = int(input("Type in the value of the green band for the color you want to change"))
+        z1 = int(input("Type in the value of the blue band for the color you want to change"))
+        x2 = int(input("Type in the value of the red band for the color you want to change it to"))
+        y2 = int(input(Type in the value of the green band for the color you want to change it to))
+        z2 = int(input(Type in the value of the blue band for the color you want to change it to))
+        pixels = oldImage.load() # create the pixel map
+        for i in range(oldImage.size[0]): # for every pixel:
+            for j in range(oldImage.size[1]):
+                if pixels[i,j] != (x1, y1, z1):
+                    # change to black if not red
+                    pixels[i,j] = (x2, y2 ,z2)
+        changed = oldImage
+        changed.show()
+        return changed
+    except:
+        print("error")
+    
 
 def apply_filter(oldImage):
-    filtered = oldImage.filter(ImageFilter.DETAIL)
-    filtered.show()
-    return filtered
+    try:
+        filtered = oldImage.filter(ImageFilter.DETAIL)
+        filtered.show()
+        return filtered
     # OTHER FILTERS??
 
-# AVOID ERRORS??
+# GO BACK IF ERRORS?? WHERE DOES EXCEPT GO?? AVOIR ERRORS??
 
 while True:
     name = "dog.jpg"
