@@ -14,31 +14,41 @@ def change_type(oldImage):
 
 def rotate(oldImage):
     deg = int(input("How many degrees do you want to rotate (counter-clockwise)?"))
-    # CHECK FOR ERROR
     rotated = oldImage.rotate(deg)
     rotated.show()
     return rotated
 
 def resize(oldImage):
     width = input("What width should your image have?")
-    length = input("What length should your image have?")
-    resized = oldImage.resize((width, length))
+    heigth = input("What heigth should your image have?")
+    resized = oldImage.resize((width, heigth))
     resized.show()
     return resized
-    # WIDTH AND LENGTH SWAPPPED?
 
-def merge_bands(oldImage):
-    r, g, b = oldImage.split()
-    merged = Image.merge("RGB", (b, g, r))
-    merged.show()
-    return merged
-    # ALL BLACK TO WHITE??
+def change_color(oldImage):
+    x1 = int(input("Type in the value of the red band for the color you want to change"))
+    y1 = int(input("Type in the value of the green band for the color you want to change"))
+    z1 = int(input("Type in the value of the blue band for the color you want to change"))
+    x2 = int(input("Type in the value of the red band for the color you want to change it to"))
+    y2 = int(input(Type in the value of the green band for the color you want to change it to))
+    z2 = int(input(Type in the value of the blue band for the color you want to change it to))
+    pixels = oldImage.load() # create the pixel map
+    for i in range(oldImage.size[0]): # for every pixel:
+        for j in range(oldImage.size[1]):
+            if pixels[i,j] != (x1, y1, z1):
+                # change to black if not red
+                pixels[i,j] = (x2, y2 ,z2)
+    changed = oldImage
+    changed.show()
+    return changed
 
 def apply_filter(oldImage):
     filtered = oldImage.filter(ImageFilter.DETAIL)
     filtered.show()
     return filtered
     # OTHER FILTERS??
+
+# AVOID ERRORS??
 
 while True:
     name = "dog.jpg"
@@ -67,7 +77,7 @@ while True:
             im = apply_filter(im)
             continue
         if edit == "color":
-            im = merge_bands(im)
+            im = change_color(im)
             continue
     elif inp == 'type':
         change_type(im)
